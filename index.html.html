@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Preview — Serambi Journey: Halal Travel Companion for Aceh</title>
+  <style>
+    :root {
+      box-sizing: border-box;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --bg: #f6faf8;
+      --card: #ffffff;
+      --tx: #12302a;
+      --mu: #587069;
+      --em: #0a6e52;
+      --tq: #0e9a9a;
+      --gd: #c9962b;
+      --bd: #d9e6e1;
+      --hd: #07382d;
+      --on: #ffffff;
+      --soft: #e6f4ef;
+      --demo-bg: #fff4d6;
+      --demo-tx: #4a3600;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0c1917; --card: #14272a; --tx: #ecf3f0; --mu: #a2b9b2;
+        --em: #3fc79c; --tq: #35c4c4; --gd: #e4b64f; --bd: #27403e;
+        --hd: #08201c; --on: #06231c; --soft: #183531;
+        --demo-bg: #2c2411; --demo-tx: #f6df9d;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0c1917; --card: #14272a; --tx: #ecf3f0; --mu: #a2b9b2;
+      --em: #3fc79c; --tq: #35c4c4; --gd: #e4b64f; --bd: #27403e;
+      --hd: #08201c; --on: #06231c; --soft: #183531;
+      --demo-bg: #2c2411; --demo-tx: #f6df9d;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-padding-top: calc(70px + var(--safe-top)); }
+    body { margin: 0; padding-bottom: var(--safe-bottom); background: var(--bg); color: var(--tx); font: 16px/1.6 Georgia, "Times New Roman", serif; }
+    body::before { content: ""; position: fixed; inset: 0 0 auto; height: var(--safe-top); background: var(--hd); z-index: 40; }
+    h1, h2, h3 { font-family: Georgia, serif; line-height: 1.2; margin: 0.2em 0 0.5em; }
+    h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); }
+    h2 { font-size: 1.45rem; }
+    h3 { font-size: 1.1rem; }
+    button, input, select, textarea, .btn, nav, .badge, label, small, table { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    a { color: var(--em); }
+    :focus-visible { outline: 3px solid var(--tq); outline-offset: 2px; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+
+    /* Header & Responsive Nav (Tanpa Horizontal Scrollbar) */
+    #site-header { position: sticky; top: var(--safe-top); z-index: 30; background: var(--hd); color: #fff; border-bottom: 3px solid var(--gd); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 10px; padding-bottom: 10px; position: relative; }
+    .brand { font-size: 1.2rem; font-weight: 700; color: #fff; text-decoration: none; font-family: Georgia, serif; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+    .nav-menu { display: flex; align-items: center; gap: 3px; flex-wrap: wrap; justify-content: center; }
+    .nav-menu a { color: #d5ebe4; text-decoration: none; padding: 6px 9px; border-radius: 7px; white-space: nowrap; font-size: 0.87rem; font-weight: 500; transition: background-color 0.15s, color 0.15s; }
+    .nav-menu a.on, .nav-menu a:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .icon-btn { background: rgba(255, 255, 255, 0.14); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 7px; padding: 6px 10px; cursor: pointer; font-size: 0.9rem; line-height: 1; }
+    .icon-btn:hover { background: rgba(255, 255, 255, 0.25); }
+    .lg { background: var(--gd); color: #1b1500; border: 0; border-radius: 7px; padding: 6px 12px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+    .menu-toggle { display: none; }
+
+    @media (max-width: 980px) {
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .nav-menu {
+        display: none; position: absolute; top: calc(100% + 3px); left: 0; right: 0;
+        background: var(--hd); flex-direction: column; align-items: stretch;
+        padding: 10px 16px 14px; gap: 4px; border-bottom: 3px solid var(--gd);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35); z-index: 29;
+      }
+      .nav-menu.open { display: flex; }
+      .nav-menu a { padding: 10px 12px; font-size: 0.95rem; }
+    }
+
+    .demo-banner { background: var(--demo-bg); color: var(--demo-tx); font: 0.82rem/1.4 system-ui, sans-serif; padding: 7px 16px; text-align: center; }
+    main { padding-top: 22px; padding-bottom: 44px; min-height: 70vh; }
+    footer { text-align: center; color: var(--mu); font: 0.82rem system-ui, sans-serif; padding: 20px 16px; border-top: 1px solid var(--bd); }
+
+    .g4 { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    .two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
+    .row label, form label { display: flex; flex-direction: column; font-size: 0.85rem; gap: 4px; flex: 1; min-width: 150px; }
+
+    .pat { position: relative; }
+    .pat::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 3 41 22 22 41 3 22Z M22 13 31 22 22 31 13 22Z' fill='none' stroke='%23fff' stroke-opacity='.16' stroke-width='1.4'/%3E%3C/svg%3E"); }
+    .pat > * { position: relative; z-index: 1; }
+
+    .hero { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 28px; align-items: center; padding: 40px 36px; border-radius: 20px; color: #fff; background-color: #0a6e52; background-image: radial-gradient(circle at 88% 8%, rgba(228, 182, 79, 0.35), transparent 45%), linear-gradient(135deg, #052e25, #0a6e52 60%, #0e9a9a); }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); letter-spacing: -0.5px; }
+    .hero p { max-width: 55ch; font-size: 1.08rem; }
+    .arch { height: 300px; border-radius: 999px 999px 16px 16px; border: 3px solid var(--gd); overflow: hidden; position: relative; background: linear-gradient(180deg, #0e9a9a, #f2c14e 92%); box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35); }
+    .rule { height: 10px; margin: 22px 0; background: repeating-linear-gradient(90deg, var(--gd) 0 10px, transparent 10px 14px, var(--tq) 14px 24px, transparent 24px 28px); opacity: 0.7; clip-path: polygon(0 50%, 5px 0, 10px 50%, 5px 100%); }
+
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 18px 0; }
+    .stats div { background: var(--card); border: 1px solid var(--bd); border-radius: 12px; padding: 12px; text-align: center; }
+    .stats b { display: block; font: 700 1.8rem Georgia, serif; color: var(--em); }
+    .stats span { font: 0.8rem system-ui, sans-serif; color: var(--mu); }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip { background: var(--card); border: 1px solid var(--bd); color: var(--tx); border-radius: 99px; padding: 8px 14px; cursor: pointer; font-size: 0.9rem; }
+    .chip:hover { border-color: var(--gd); background: var(--soft); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .steps div { background: var(--card); border: 1px solid var(--bd); border-left: 4px solid var(--gd); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+    .steps i { font: 700 1.5rem Georgia, serif; color: var(--gd); font-style: normal; }
+
+    .btn { display: inline-block; background: var(--em); color: var(--on); border: 2px solid var(--em); border-radius: 8px; padding: 8px 14px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.92rem; text-align: center; }
+    .btn.o { background: transparent; color: var(--em); }
+    .btn.g { background: var(--gd); border-color: var(--gd); color: #1b1500; }
+    .btn.ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.7); }
+    .btn.wa { background: #1f8f4e; border-color: #1f8f4e; color: #fff; }
+    .sm { border: 1px solid var(--bd); background: var(--card); color: var(--tx); border-radius: 6px; cursor: pointer; margin-left: 4px; padding: 3px 8px; font-size: 0.82rem; }
+    .sm:hover { border-color: var(--gd); }
+
+    .card { background: var(--card); border: 1px solid var(--bd); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+    .card:hover { border-color: var(--gd); }
+    .card h3 { font-size: 1.15rem; }
+    .pad { padding: 16px; margin: 14px 0; }
+    .bd { padding: 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .bd .btn { margin-top: auto; }
+    .im-wrap { position: relative; }
+    .im { height: 160px; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; position: relative; }
+    .ic { position: absolute; top: 8px; right: 8px; background: var(--card); color: var(--em); border: 0; border-radius: 50%; width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer; z-index: 3; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+
+    input, select, textarea { padding: 8px 10px; border: 1px solid var(--bd); border-radius: 8px; background: var(--card); color: var(--tx); font-size: 0.95rem; width: 100%; }
+    .badge { display: inline-block; align-self: flex-start; font-size: 0.75rem; padding: 2px 8px; border-radius: 99px; background: var(--soft); color: var(--em); border: 1px solid var(--bd); }
+    .badge.gold { background: rgba(228, 182, 79, 0.2); color: #ffe3a0; border-color: rgba(228, 182, 79, 0.5); }
+    .badge.verif { background: #d8f3e4; color: #0b5a35; }
+    .badge.proses { background: #fff0c9; color: #6a4a00; }
+    .badge.belum { background: #f1e2e2; color: #7a2a2a; }
+    .mu, small { color: var(--mu); }
+    .note { border-left: 4px solid var(--gd); background: var(--soft); padding: 10px 14px; border-radius: 6px; font: 0.88rem/1.5 system-ui, sans-serif; }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    td, th { padding: 9px 8px; border-bottom: 1px solid var(--bd); text-align: left; }
+    .ck { flex-direction: row !important; align-items: center; gap: 6px !important; min-width: auto !important; flex: 0 !important; white-space: nowrap; }
+    .ck input { width: auto; }
+    .it-list li { margin-bottom: 6px; }
+    svg.aceh-map { width: 100%; max-width: 540px; }
+    svg.aceh-map text { font: 11px system-ui, sans-serif; fill: var(--tx); }
+    svg.aceh-map .dot { cursor: pointer; }
+    svg.aceh-map .dot:hover { r: 8; }
+    #toast { position: fixed; bottom: calc(16px + var(--safe-bottom)); left: 50%; transform: translateX(-50%); background: var(--hd); color: #fff; padding: 9px 18px; border-radius: 8px; font: 0.9rem system-ui, sans-serif; display: none; z-index: 50; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); }
+
+    @media (max-width: 720px) {
+      .hero { grid-template-columns: 1fr; padding: 28px 20px; }
+      .arch { height: 230px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .card { transition: box-shadow 0.2s, border-color 0.2s; }
+      .card:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); }
+    }
+  </style>
+</head>
+<body>
+  <header id="site-header"></header>
+  <div class="demo-banner" id="demo-banner" role="note"></div>
+  <main class="wrap" id="app" tabindex="-1"></main>
+  <footer id="site-footer"></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      const $ = (s, r = document) => r.querySelector(s);
+      const E = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const parseList = (v) => Array.isArray(v) ? v.map((x) => String(x).trim()).filter(Boolean) : String(v || '').split(',').map((s) => s.trim()).filter(Boolean);
+      const rp = (n) => 'Rp' + Number(n || 0).toLocaleString('id-ID');
+      const load = (k, d) => { try { const v = JSON.parse(localStorage.getItem('sj1:' + k)); return v == null ? d : v; } catch { return d; } };
+      const save = (k, v) => { try { localStorage.setItem('sj1:' + k, JSON.stringify(v)); return true; } catch { return false; } };
+
+      let toastTimer = null;
+      const toast = (m) => {
+        const el = $('#toast');
+        el.textContent = m;
+        el.style.display = 'block';
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => { el.style.display = 'none'; }, 2400);
+      };
+
+      const WILAYAH = { banda: 'Banda Aceh', sabang: 'Sabang', besar: 'Aceh Besar', tengah: 'Aceh Tengah', bener: 'Bener Meriah' };
+      const CATEGORIES = {
+        religi: ['Religi', 'Religious', '🕌', 160],
+        alam: ['Alam', 'Nature', '⛰️', 140],
+        bahari: ['Bahari', 'Marine', '🏝️', 192],
+        sejarah: ['Sejarah', 'History', '🏛️', 38],
+        budaya: ['Budaya', 'Culture', '🎭', 18],
+        kuliner: ['Kuliner', 'Culinary', '🍲', 8],
+      };
+      const MAP_POINTS = { sabang: [45, 40], banda: [100, 62], besar: [140, 92], bener: [228, 98], tengah: [208, 150] };
+      const PAGES = ['home', 'dest', 'food', 'stay', 'plan', 'budget', 'pkg', 'fav', 'admin'];
+      const ADMIN_SCHEMAS = {
+        dest: { prefix: 'd', labelKey: 'dest', fields: [['nama', 't', 1], ['kategori', 's', 1, Object.keys(CATEGORIES)], ['wilayah', 's', 1, Object.keys(WILAYAH)], ['deskripsi', 'a', 1], ['deskripsiEn', 'a', 0], ['alamat', 't', 0], ['estimasiBiaya', 'n', 1], ['fasilitas', 'l', 0], ['fasilitasIbadah', 'l', 0], ['unggulan', 'c', 0]] },
+        kuliner: { prefix: 'k', labelKey: 'food', fields: [['nama', 't', 1], ['kategori', 's', 1, ['makanan', 'minuman', 'oleh-oleh']], ['wilayah', 's', 1, Object.keys(WILAYAH)], ['harga', 'n', 1], ['statusSertifikasiHalal', 's', 1, ['belum', 'proses', 'verif']], ['sumberVerifikasi', 't', 0], ['kontak', 't', 0]] },
+        akomodasi: { prefix: 'a', labelKey: 'stay', fields: [['nama', 't', 1], ['wilayah', 's', 1, Object.keys(WILAYAH)], ['hargaPerMalam', 'n', 1], ['fasilitas', 'l', 0], ['fasilitasRamahMuslim', 'l', 0], ['kontak', 't', 0]] },
+        paket: { prefix: 'p', labelKey: 'pkg', fields: [['nama', 't', 1], ['durasi', 'n', 1], ['daftarDestinasi', 'l', 1], ['estimasiBiaya', 'n', 1], ['deskripsi', 'a', 0]] },
+      };
+
+      const buildMapsUrl = (d) => 'https://www.google.com/maps/search/' + encodeURIComponent(`${d.nama} ${WILAYAH[d.wilayah] || ''} Aceh`);
+
+      const createSeedData = () => ({
+        dest: [
+          ['Masjid Raya Baiturrahman', 'religi', 'banda', 'Masjid ikonik di pusat Banda Aceh dengan kubah hitam dan halaman luas.', 'Iconic mosque in central Banda Aceh with black domes and a wide courtyard.', 0, 'Parkir,Toilet,Pemandu', 'Ruang salat pria,Ruang salat wanita,Tempat wudu', 1],
+          ['Museum Tsunami Aceh', 'sejarah', 'banda', 'Museum edukasi tentang tsunami 2004 dan mitigasi bencana.', 'Museum on the 2004 tsunami and disaster mitigation.', 15000, 'AC,Toilet,Kafe', 'Mushola', 1],
+          ['Museum Aceh dan Rumoh Aceh', 'budaya', 'banda', 'Koleksi budaya Aceh dan rumah adat tradisional.', 'Aceh cultural collection and a traditional house.', 5000, 'Parkir,Toilet', 'Mushola', 0],
+          ['Pantai Lampuuk', 'bahari', 'besar', 'Pantai pasir putih dengan ombak cocok untuk berselancar.', 'White-sand beach with surf-friendly waves.', 0, 'Warung,Parkir,Toilet', 'Mushola kecil,Tempat wudu', 1],
+          ['Benteng Indra Patra', 'sejarah', 'besar', 'Sisa benteng pesisir dari masa pra-Islam.', 'Coastal fortress remains from the pre-Islamic era.', 5000, 'Parkir', 'Tempat wudu', 0],
+          ['Tugu Titik Nol Km Sabang', 'sejarah', 'sabang', 'Penanda ujung barat Indonesia di Pulau Weh.', 'Marker of Indonesia’s western tip on Weh Island.', 0, 'Parkir,Warung', 'Mushola', 1],
+          ['Pantai Iboih dan Pulau Rubiah', 'bahari', 'sabang', 'Titik snorkeling dan menyelam dengan air jernih.', 'Clear-water snorkeling and diving spot.', 20000, 'Sewa snorkel,Homestay,Warung', 'Mushola,Tempat wudu', 1],
+          ['Danau Laut Tawar', 'alam', 'tengah', 'Danau pegunungan di Takengon, udara sejuk.', 'Highland lake in Takengon with cool air.', 0, 'Parkir,Warung,Sewa perahu', 'Mushola,Tempat wudu', 1],
+          ['Gua Putri Pukes', 'alam', 'tengah', 'Gua kapur dengan formasi stalaktit dekat Laut Tawar.', 'Limestone cave with stalactites near Laut Tawar.', 10000, 'Parkir,Pemandu', 'Mushola', 0],
+          ['Gunung Burni Telong', 'alam', 'bener', 'Gunung api aktif untuk pendakian dan panorama kebun.', 'Active volcano for hiking and plantation views.', 20000, 'Pemandu,Parkir', 'Mushola basecamp', 0],
+          ['Kebun Kopi Gayo', 'kuliner', 'bener', 'Wisata edukasi kopi arabika Gayo, dari kebun ke cangkir.', 'Gayo arabica coffee tour from farm to cup.', 25000, 'Kafe,Parkir,Toilet', 'Mushola', 1],
+          ['Kopi Ulee Kareng', 'kuliner', 'banda', 'Kawasan warung kopi tradisional khas Banda Aceh.', 'Traditional coffee-shop district of Banda Aceh.', 15000, 'Kafe,Parkir,Wi-Fi', 'Mushola', 0],
+        ].map((a, i) => {
+          const item = { id: 'd' + (i + 1), nama: a[0], kategori: a[1], wilayah: a[2], deskripsi: a[3], deskripsiEn: a[4], imageUrl: 'placeholder', alamat: `${WILAYAH[a[2]]}, Aceh`, estimasiBiaya: a[5], fasilitas: parseList(a[6]), fasilitasIbadah: parseList(a[7]), unggulan: !!a[8] };
+          item.mapsUrl = buildMapsUrl(item);
+          return item;
+        }),
+        kuliner: [
+          ['Mie Aceh Kuah Daging', 'makanan', 'banda', 30000, 'verif'], ['Ayam Tangkap', 'makanan', 'besar', 35000, 'proses'],
+          ['Kopi Gayo Sangrai', 'minuman', 'bener', 45000, 'verif'], ['Sanger Ulee Kareng', 'minuman', 'banda', 12000, 'belum'],
+          ['Kuah Pliek U', 'makanan', 'besar', 28000, 'belum'], ['Timphan (oleh-oleh)', 'oleh-oleh', 'banda', 25000, 'proses'],
+          ['Mie Sabang', 'makanan', 'sabang', 32000, 'belum'], ['Depik Bakar Gayo', 'makanan', 'tengah', 40000, 'belum'],
+        ].map((a, i) => ({ id: 'k' + (i + 1), nama: a[0], kategori: a[1], wilayah: a[2], harga: a[3], imageUrl: 'placeholder', statusSertifikasiHalal: a[4], sumberVerifikasi: a[4] === 'verif' ? 'Contoh BPJPH (simulasi)' : a[4] === 'proses' ? 'Pengajuan (simulasi)' : '-', kontak: '6281200000' + (10 + i) })),
+        akomodasi: [
+          ['Serambi Guesthouse (contoh)', 'banda', 350000, 'Wi-Fi,AC,Sarapan', 'Mushola,Arah kiblat,Sarapan tanpa babi'],
+          ['Meuligoe Inn (contoh)', 'banda', 550000, 'Wi-Fi,AC,Kolam', 'Mushola,Sajadah,Arah kiblat'],
+          ['Iboih Bungalow (contoh)', 'sabang', 450000, 'Kipas,Dekat pantai', 'Arah kiblat,Sajadah'],
+          ['Lampuuk Homestay (contoh)', 'besar', 300000, 'Wi-Fi,Parkir', 'Mushola,Arah kiblat'],
+          ['Laut Tawar Lodge (contoh)', 'tengah', 400000, 'Pemanas air,Sarapan', 'Mushola,Sajadah'],
+          ['Gayo Cottage (contoh)', 'bener', 380000, 'Pemanas air,Kebun', 'Arah kiblat,Tempat wudu'],
+        ].map((a, i) => ({ id: 'a' + (i + 1), nama: a[0], wilayah: a[1], hargaPerMalam: a[2], fasilitas: parseList(a[3]), fasilitasRamahMuslim: parseList(a[4]), imageUrl: 'placeholder', kontak: '6281200001' + (10 + i) })),
+        paket: [
+          ['Jejak Religi dan Sejarah Banda Aceh', 2, 'd1,d2,d3', 650000, 'Masjid, museum, dan budaya kota.'],
+          ['Pesona Bahari Sabang', 3, 'd6,d7', 1800000, 'Titik Nol Km dan snorkeling Iboih.'],
+          ['Gayo Highland Escape', 3, 'd8,d9,d10,d11', 1500000, 'Danau, gua, gunung, dan kebun kopi.'],
+          ['Pantai, Benteng, dan Kopi', 2, 'd12,d4,d5', 600000, 'Ngopi Ulee Kareng lalu pesisir Aceh Besar.'],
+        ].map((a, i) => ({ id: 'p' + (i + 1), nama: a[0], durasi: a[1], daftarDestinasi: parseList(a[2]), estimasiBiaya: a[3], deskripsi: a[4] })),
+      });
+
+      const T = {
+        home: ['Beranda', 'Home'], dest: ['Destinasi', 'Destinations'], food: ['Kuliner Halal', 'Halal Food'], stay: ['Akomodasi', 'Stay'],
+        plan: ['Itinerary', 'Itinerary'], budget: ['Anggaran', 'Budget'], pkg: ['Paket', 'Packages'], fav: ['Favorit', 'Favorites'], admin: ['Dashboard', 'Dashboard'],
+        demo: ['Mode demo: harga, kontak, dan status halal adalah data simulasi. Informasi destinasi nyata belum diverifikasi.', 'Demo mode: prices, contacts, and halal status are simulated data. Real destination information is unverified.'],
+        h1: ['Jelajahi Serambi Mekkah dengan Tenang', 'Explore Aceh with Peace of Mind'],
+        sub: ['Temukan destinasi, kuliner, dan penginapan ramah Muslim, lalu susun perjalananmu sendiri.', 'Find destinations, food, and Muslim-friendly stays, then plan your own trip.'],
+        c1: ['Mulai jelajah', 'Start exploring'], c2: ['Cari paket cocok', 'Find a package'], feat: ['Destinasi unggulan', 'Featured destinations'],
+        map: ['Peta ilustratif (bukan skala). Klik titik atau nama wilayah.', 'Illustrative map (not to scale). Click a dot or region name.'],
+        q: ['Cari nama atau kata kunci', 'Search name or keyword'], allr: ['Semua wilayah', 'All regions'], allc: ['Semua kategori', 'All categories'], allst: ['Semua status', 'All statuses'],
+        sort: ['Urutkan', 'Sort'], sn: ['Nama A-Z', 'Name A-Z'], sl: ['Biaya terendah', 'Lowest cost'], sh: ['Biaya tertinggi', 'Highest cost'], sf: ['Unggulan dulu', 'Featured first'],
+        cost: ['Estimasi biaya (simulasi)', 'Estimated cost (simulated)'], free: ['Gratis', 'Free'], fac: ['Fasilitas', 'Facilities'], wor: ['Fasilitas ibadah dan ramah Muslim', 'Prayer and Muslim-friendly facilities'],
+        hn: ['Fasilitas ramah Muslim (mushola, tempat wudu) bukan sertifikasi halal resmi. Sertifikasi halal hanya diterbitkan lembaga berwenang.', 'Muslim-friendly facilities (prayer room, ablution) are not official halal certification. Only the authorized body issues halal certificates.'],
+        unv: ['Informasi destinasi belum diverifikasi', 'Destination information is unverified'], none: ['Tidak ada hasil. Coba ubah kata kunci atau filter.', 'No results. Try changing the keyword or filters.'],
+        back: ['Kembali', 'Back'], gm: ['Buka Google Maps', 'Open Google Maps'], wa: ['WhatsApp (demo)', 'WhatsApp (demo)'], detail: ['Detail', 'Details'], sim: ['(simulasi)', '(simulated)'],
+        s_verif: ['Terverifikasi (simulasi)', 'Verified (simulated)'], s_belum: ['Belum diverifikasi', 'Not verified'], s_proses: ['Dalam proses', 'In process'],
+        src: ['Sumber verifikasi', 'Verification source'], night: ['/malam', '/night'], pn: ['Nama perjalanan', 'Trip name'], ps: ['Tanggal mulai', 'Start date'], pd: ['Jumlah hari', 'Days'], pp: ['Jumlah wisatawan', 'Travelers'],
+        day: ['Hari', 'Day'], add: ['Tambah', 'Add'], save: ['Simpan', 'Save'], tot: ['Total tiket destinasi (simulasi)', 'Destination tickets total (simulated)'],
+        saved: ['Itinerary tersimpan', 'Saved itineraries'], open: ['Buka', 'Open'], del: ['Hapus', 'Delete'], sure: ['Yakin?', 'Sure?'],
+        noact: ['Belum ada aktivitas. Pilih destinasi di bawah.', 'No activities yet. Pick a destination below.'], newi: ['Itinerary baru', 'New itinerary'],
+        b_tr: ['Transport per orang', 'Transport per person'], b_n: ['Jumlah malam', 'Nights'], b_ho: ['Harga kamar per malam', 'Room price per night'], b_r: ['Jumlah kamar', 'Rooms'],
+        b_ti: ['Tiket destinasi per orang', 'Destination tickets per person'], b_me: ['Makan per orang per hari', 'Meals per person per day'], b_ot: ['Lain-lain (total)', 'Other (total)'], b_it: ['Ambil tiket dari itinerary', 'Use tickets from itinerary'],
+        r_tr: ['Transport', 'Transport'], r_ho: ['Akomodasi', 'Accommodation'], r_ti: ['Tiket', 'Tickets'], r_me: ['Makan', 'Meals'], r_ot: ['Lain-lain', 'Other'], r_t: ['Total', 'Total'], r_pp: ['Per orang', 'Per person'],
+        i_t: ['Minat', 'Interests'], i_b: ['Anggaran total (Rp)', 'Total budget (Rp)'], i_d: ['Durasi maksimal (hari)', 'Maximum days'], m: ['Kecocokan', 'Match'], use: ['Pakai di itinerary', 'Use in itinerary'],
+        fav0: ['Belum ada favorit. Tekan ♡ pada kartu mana pun.', 'No favorites yet. Tap ♡ on any card.'], reset: ['Reset data demo', 'Reset demo data'], cancel: ['Batal', 'Cancel'], req: ['wajib diisi', 'required'],
+        edit: ['Ubah', 'Edit'], new: ['Tambah baru', 'Add new'], photoLabel: ['Foto (URL, path file, atau unggah)', 'Photo (URL, file path, or upload)'], photoReady: ['✔ foto siap, klik Simpan', '✔ photo ready, click Save'],
+        st_w: ['Wilayah', 'Regions'], st_c: ['Kategori', 'Categories'], how: ['Rencanakan dalam 3 langkah', 'Plan in 3 steps'],
+        s1: ['Jelajahi', 'Explore'], s1d: ['Telusuri destinasi, kuliner halal, dan penginapan ramah Muslim.', 'Browse destinations, halal food, and Muslim-friendly stays.'],
+        s2: ['Susun', 'Arrange'], s2d: ['Buat itinerary 1 sampai 5 hari dan simpan beberapa rencana.', 'Build a 1 to 5 day itinerary and save several plans.'],
+        s3: ['Hitung', 'Calculate'], s3d: ['Perkirakan anggaran dan pilih paket yang cocok.', 'Estimate your budget and pick a matching package.'],
+        map_t: ['Peta destinasi', 'Destination map'], ft: ['Preview Production-Ready (Vite + Vanilla JS). Data tersimpan lokal di browser (localStorage).', 'Production-Ready Preview (Vite + Vanilla JS). Data is stored locally in your browser (localStorage).'],
+        menu: ['Buka menu navigasi', 'Toggle navigation menu'], theme: ['Ganti tema terang/gelap', 'Toggle light/dark theme'], storageErr: ['Penyimpanan browser penuh atau diblokir', 'Browser storage full or blocked'],
+      };
+
+      const newIt = () => ({ id: 'i' + Date.now(), namaPerjalanan: 'Trip Aceh', tanggalMulai: new Date().toISOString().slice(0, 10), jumlahHari: 2, jumlahWisatawan: 2, daftarAktivitas: [[], []], totalAnggaran: 0 });
+      const defFlt = () => ({ q: '', wil: '', kat: '', sort: 'nama', st: '' });
+
+      let D = load('data', null);
+      if (!D || !['dest', 'kuliner', 'akomodasi', 'paket'].every((k) => Array.isArray(D[k]))) D = createSeedData();
+      let lang = load('lang', 'id') === 'en' ? 'en' : 'id';
+      let theme = load('theme', 'auto');
+      let fav = load('fav', []); if (!Array.isArray(fav)) fav = [];
+      let its = load('its', []); if (!Array.isArray(its)) its = [];
+      let cur = load('cur', null); if (!cur || !Array.isArray(cur.daftarAktivitas)) cur = newIt();
+
+      let filters = defFlt(), keepFilters = false, confirmKey = '', menuOpen = false, liveUpdater = null;
+      let budget = { pax: 2, nights: 2, tr: 400000, ho: 350000, rooms: 1, ti: 30000, me: 100000, ot: 100000 };
+      let pkgFilter = { cats: [], budget: 2000000, days: 3, wil: '' };
+      let admin = { tab: 'dest', ed: null, err: '' };
+
+      const t = (k) => (T[k] || [k, k])[lang === 'id' ? 0 : 1];
+      const cn = (k) => CATEGORIES[k]?.[lang === 'id' ? 0 : 1] || k;
+      const ds = (d) => lang === 'id' ? d.deskripsi : (d.deskripsiEn || d.deskripsi);
+      const getItem = (col, id) => D[col]?.find((x) => x.id === id);
+      const isFav = (ty, id) => fav.some((f) => f.tipeItem === ty && f.itemId === id);
+      const calcIt = (it = cur) => it.daftarAktivitas.flat().reduce((s, id) => s + (getItem('dest', id)?.estimasiBiaya || 0), 0) * it.jumlahWisatawan;
+      const persist = (k, v) => { if (!save(k, v)) toast(t('storageErr')); };
+
+      const scn = (e) => {
+        const f = 'rgba(4,30,24,.6)';
+        const M = {
+          128332: `<path d="M40 130V92h120v38zM70 92a30 30 0 0 1 60 0zM98 58h4v-12h-4z"/><rect x="26" y="58" width="9" height="72"/><rect x="165" y="58" width="9" height="72"/><path d="M26 58l4.5-12 4.5 12zM165 58l4.5-12 4.5 12z"/>`,
+          127963: `<path d="M20 100 100 62l80 38zM30 130v-26h140v26z"/>`,
+          127965: `<path d="M0 104q25-12 50 0t50 0 50 0 50 0v26H0z"/><path d="M150 104Q154 72 140 50" stroke="${f}" stroke-width="4" fill="none"/><path d="M140 50q-20-4-32 8q20-8 32-8M140 50q18-8 34 2q-20-2-34-2M140 50q-6-18 8-24q-2 16-8 24"/>`,
+          9968: `<path d="M0 130 55 62 92 102 128 46 200 130z"/>`,
+          127917: `<path d="M45 72 100 40l55 32zM58 72h84v26H58z"/><path d="M66 98v32M100 98v32M134 98v32" stroke="${f}" stroke-width="5"/>`,
+          127858: `<path d="M45 88h110a55 40 0 0 1-110 0z"/><path d="M80 74q-8-10 0-22M100 74q-8-10 0-22M120 74q-8-10 0-22" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="3"/>`,
+          128719: `<path d="M50 130V82l50-32 50 32v48z"/>`,
+        };
+        M[9749] = M[127858];
+        return `<svg viewBox="0 0 200 130" preserveAspectRatio="xMidYMax slice" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%"><circle cx="152" cy="34" r="15" fill="#ffd978" opacity=".92"/><g fill="${f}">${M[String(e).codePointAt(0)] || M[9968]}</g></svg>`;
+      };
+
+      const im = (h, e, u, alt) => u && u !== 'placeholder'
+        ? `<div class="im" role="img" aria-label="${E(alt)}" style="background:#0a6e52 center/cover no-repeat url('${E(u)}')"></div>`
+        : `<div class="im pat" role="img" aria-label="${E(alt)}" style="background-color:hsl(${h} 55% 30%);background-image:linear-gradient(135deg,hsl(${h} 60% 26%),hsl(${(h + 35) % 360} 65% 40%))">${scn(e)}</div>`;
+      const fb = (ty, id) => `<button type="button" class="ic" data-a="fav" data-t="${ty}" data-id="${id}" aria-pressed="${isFav(ty, id)}" aria-label="${E(t('fav'))}">${isFav(ty, id) ? '♥' : '♡'}</button>`;
+      const wa = (k, n) => `<a class="btn wa" target="_blank" rel="noopener noreferrer" href="https://wa.me/${E(k)}?text=${encodeURIComponent('Halo, saya tertarik dengan ' + n + ' (demo Serambi Journey)')}">${E(t('wa'))}</a>`;
+      const ro = (v) => `<option value="">${E(t('allr'))}</option>` + Object.keys(WILAYAH).map((k) => `<option value="${k}"${v === k ? ' selected' : ''}>${E(WILAYAH[k])}</option>`).join('');
+      const grid = (a, fn) => a.length ? `<div class="g4">${a.map(fn).join('')}</div>` : `<p class="note">${E(t('none'))}</p>`;
+
+      const dc = (d) => `<article class="card"><div class="im-wrap">${im(CATEGORIES[d.kategori]?.[3] ?? 150, CATEGORIES[d.kategori]?.[2] ?? '📍', d.imageUrl, d.nama)}${fb('dest', d.id)}</div><div class="bd"><span class="badge">${E(cn(d.kategori))} · ${E(WILAYAH[d.wilayah] || '')}</span><h3>${E(d.nama)}</h3><small>${E(ds(d))}</small><small>${E(t('cost'))}: ${d.estimasiBiaya ? rp(d.estimasiBiaya) : E(t('free'))}</small><a class="btn o" href="#/dest/${d.id}">${E(t('detail'))}</a></div></article>`;
+      const fc = (f) => `<article class="card"><div class="im-wrap">${im(f.kategori === 'minuman' ? 30 : 8, f.kategori === 'minuman' ? '☕' : '🍲', f.imageUrl, f.nama)}${fb('kuliner', f.id)}</div><div class="bd"><span class="badge">${E(f.kategori)} · ${E(WILAYAH[f.wilayah] || '')}</span><h3>${E(f.nama)}</h3><small>${rp(f.harga)} ${E(t('sim'))}</small><span class="badge ${E(f.statusSertifikasiHalal)}">${E(t('s_' + f.statusSertifikasiHalal))}</span><small>${E(t('src'))}: ${E(f.sumberVerifikasi)}</small><small>+${E(f.kontak)} ${E(t('sim'))}</small>${wa(f.kontak, f.nama)}</div></article>`;
+      const ac = (a) => `<article class="card"><div class="im-wrap">${im(200, '🛏️', a.imageUrl, a.nama)}${fb('akomodasi', a.id)}</div><div class="bd"><span class="badge">${E(WILAYAH[a.wilayah] || '')}</span><h3>${E(a.nama)}</h3><small>${rp(a.hargaPerMalam)}${E(t('night'))} ${E(t('sim'))}</small><small>${E(parseList(a.fasilitas).join(', '))}</small><small>🕌 ${E(parseList(a.fasilitasRamahMuslim).join(', '))}</small><small>+${E(a.kontak)} ${E(t('sim'))}</small>${wa(a.kontak, a.nama)}</div></article>`;
+
+      const mapSvg = () => {
+        const cnt = {};
+        return `<svg class="aceh-map" viewBox="0 0 300 190" role="img" aria-label="${E(t('map'))}"><path d="M10 30 L90 40 L150 70 L260 80 L285 130 L230 180 L170 160 L120 120 L60 90 Z" fill="var(--soft)" stroke="var(--em)" stroke-width="1.5"/>` +
+          Object.keys(MAP_POINTS).map((k) => `<text x="${MAP_POINTS[k][0] - 18}" y="${MAP_POINTS[k][1] - 14}" style="cursor:pointer;font-weight:700" data-a="reg" data-id="${k}" tabindex="0" role="button">${E(WILAYAH[k])}</text>`).join('') +
+          D.dest.map((d) => {
+            const p = MAP_POINTS[d.wilayah] || [150, 100], n = (cnt[d.wilayah] = (cnt[d.wilayah] || 0) + 1);
+            return `<circle class="dot" r="6" cx="${p[0] + (n - 1) * 15 - 6}" cy="${p[1] + (n % 2) * 10}" fill="${d.unggulan ? 'var(--gd)' : 'var(--tq)'}" stroke="#fff" data-a="go" data-id="${d.id}" tabindex="0" role="link" aria-label="${E(d.nama)}"><title>${E(d.nama)}</title></circle>`;
+          }).join('') + `</svg><p><small>${E(t('map'))}</small></p>`;
+      };
+
+      const Pg = {};
+      Pg.home = () => `<section class="hero pat"><div><span class="badge gold">☪ Halal Travel Companion</span><h1>${E(t('h1'))}</h1><p>${E(t('sub'))}</p><div class="row"><a class="btn g" href="#/dest">${E(t('c1'))}</a><a class="btn ghost" href="#/pkg">${E(t('c2'))}</a></div></div><div class="arch" role="img" aria-label="Masjid Raya Baiturrahman">${scn(String.fromCodePoint(128332))}</div></section><div class="stats"><div><b>${D.dest.length}</b><span>${E(t('dest'))}</span></div><div><b>${Object.keys(WILAYAH).length}</b><span>${E(t('st_w'))}</span></div><div><b>${Object.keys(CATEGORIES).length}</b><span>${E(t('st_c'))}</span></div><div><b>${D.kuliner.length}</b><span>${E(t('food'))}</span></div></div><div class="chips">${Object.keys(CATEGORIES).map((k) => `<button type="button" class="chip" data-a="cat" data-id="${k}">${CATEGORIES[k][2]} ${E(cn(k))}</button>`).join('')}</div><div class="rule"></div><h2>${E(t('feat'))}</h2>${grid(D.dest.filter((d) => d.unggulan).slice(0, 6), dc)}<div class="rule"></div><h2>${E(t('how'))}</h2><div class="steps"><div><i>1</i><b>${E(t('s1'))}</b><small>${E(t('s1d'))}</small></div><div><i>2</i><b>${E(t('s2'))}</b><small>${E(t('s2d'))}</small></div><div><i>3</i><b>${E(t('s3'))}</b><small>${E(t('s3d'))}</small></div></div><div class="rule"></div><h2>${E(t('map_t'))}</h2>${mapSvg()}`;
+
+      const filterDest = () => {
+        const q = filters.q.toLowerCase();
+        const so = { nama: (a, b) => a.nama.localeCompare(b.nama), low: (a, b) => a.estimasiBiaya - b.estimasiBiaya, high: (a, b) => b.estimasiBiaya - a.estimasiBiaya, feat: (a, b) => Number(b.unggulan) - Number(a.unggulan) };
+        return D.dest.filter((d) => (!filters.wil || d.wilayah === filters.wil) && (!filters.kat || d.kategori === filters.kat) && (!q || `${d.nama} ${d.deskripsi} ${d.deskripsiEn || ''}`.toLowerCase().includes(q))).sort(so[filters.sort] || so.nama);
+      };
+
+      Pg.dest = (id) => {
+        if (id) {
+          const d = getItem('dest', id);
+          if (d) {
+            const daysOpt = cur.daftarAktivitas.map((_, i) => `<option value="${i}">${E(t('day'))} ${i + 1}</option>`).join('');
+            return `<a href="#/dest">← ${E(t('back'))}</a><h1>${E(d.nama)}</h1><div class="two"><div class="card">${im(CATEGORIES[d.kategori]?.[3] ?? 150, CATEGORIES[d.kategori]?.[2] ?? '📍', d.imageUrl, d.nama)}<div class="bd"><span class="badge">${E(cn(d.kategori))} · ${E(WILAYAH[d.wilayah] || '')}</span><p>${E(ds(d))}</p><b>${E(t('cost'))}: ${d.estimasiBiaya ? rp(d.estimasiBiaya) : E(t('free'))}</b><small>${E(d.alamat)}</small><div class="row" style="margin-top:8px"><a class="btn" target="_blank" rel="noopener noreferrer" href="${E(d.mapsUrl)}">${E(t('gm'))}</a><select id="detail-day-select" style="width:auto">${daysOpt}</select><button type="button" class="btn o" data-a="addday" data-id="${d.id}">＋ ${E(t('plan'))}</button><button type="button" class="btn o" data-a="fav" data-t="dest" data-id="${d.id}">${isFav('dest', d.id) ? '♥' : '♡'} ${E(t('fav'))}</button></div></div></div><div><div class="card pad"><h3>${E(t('fac'))}</h3><p>${E(parseList(d.fasilitas).join(', ') || '-')}</p><h3>🕌 ${E(t('wor'))}</h3><p>${E(parseList(d.fasilitasIbadah).join(', ') || '-')}</p></div><p class="note">${E(t('hn'))}</p><p class="note">${E(t('unv'))}.</p></div></div>`;
+          }
+        }
+        liveUpdater = () => grid(filterDest(), dc);
+        return `<h1>${E(t('dest'))}</h1><div class="card pad row"><label>${E(t('q'))}<input type="search" data-g="S" data-f="q" value="${E(filters.q)}"></label><label>${E(t('allr'))}<select data-g="S" data-f="wil">${ro(filters.wil)}</select></label><label>${E(t('allc'))}<select data-g="S" data-f="kat"><option value="">${E(t('allc'))}</option>${Object.keys(CATEGORIES).map((k) => `<option value="${k}"${filters.kat === k ? ' selected' : ''}>${E(cn(k))}</option>`).join('')}</select></label><label>${E(t('sort'))}<select data-g="S" data-f="sort">${[['nama', 'sn'], ['low', 'sl'], ['high', 'sh'], ['feat', 'sf']].map((o) => `<option value="${o[0]}"${filters.sort === o[0] ? ' selected' : ''}>${E(t(o[1]))}</option>`).join('')}</select></label></div><div id="res">${liveUpdater()}</div><div class="rule"></div>${mapSvg()}`;
+      };
+
+      Pg.food = () => {
+        liveUpdater = () => grid(D.kuliner.filter((f) => (!filters.wil || f.wilayah === filters.wil) && (!filters.st || f.statusSertifikasiHalal === filters.st) && (!filters.q || f.nama.toLowerCase().includes(filters.q.toLowerCase()))), fc);
+        return `<h1>${E(t('food'))}</h1><p class="note">${E(t('hn'))}</p><div class="card pad row"><label>${E(t('q'))}<input type="search" data-g="S" data-f="q" value="${E(filters.q)}"></label><label>${E(t('allr'))}<select data-g="S" data-f="wil">${ro(filters.wil)}</select></label><label>Status<select data-g="S" data-f="st"><option value="">${E(t('allst'))}</option>${['verif', 'belum', 'proses'].map((s) => `<option value="${s}"${filters.st === s ? ' selected' : ''}>${E(t('s_' + s))}</option>`).join('')}</select></label></div><div id="res">${liveUpdater()}</div>`;
+      };
+
+      Pg.stay = () => {
+        liveUpdater = () => grid(D.akomodasi.filter((a) => (!filters.wil || a.wilayah === filters.wil) && (!filters.q || a.nama.toLowerCase().includes(filters.q.toLowerCase()))).sort((a, b) => filters.sort === 'high' ? b.hargaPerMalam - a.hargaPerMalam : filters.sort === 'low' ? a.hargaPerMalam - b.hargaPerMalam : a.nama.localeCompare(b.nama)), ac);
+        return `<h1>${E(t('stay'))}</h1><div class="card pad row"><label>${E(t('q'))}<input type="search" data-g="S" data-f="q" value="${E(filters.q)}"></label><label>${E(t('allr'))}<select data-g="S" data-f="wil">${ro(filters.wil)}</select></label><label>${E(t('sort'))}<select data-g="S" data-f="sort">${[['nama', 'sn'], ['low', 'sl'], ['high', 'sh']].map((o) => `<option value="${o[0]}"${filters.sort === o[0] ? ' selected' : ''}>${E(t(o[1]))}</option>`).join('')}</select></label></div><div id="res">${liveUpdater()}</div>`;
+      };
+
+      Pg.plan = () => {
+        cur.totalAnggaran = calcIt(cur);
+        const daysHtml = cur.daftarAktivitas.map((day, i) => {
+          const dt = new Date(cur.tanggalMulai); dt.setDate(dt.getDate() + i);
+          const dateTxt = isNaN(dt) ? '' : dt.toLocaleDateString(lang === 'id' ? 'id-ID' : 'en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+          return `<section class="card pad"><h3>${E(t('day'))} ${i + 1} <small>${E(dateTxt)}</small></h3>${day.length ? `<ol class="it-list">` + day.map((id, j) => { const d = getItem('dest', id); return d ? `<li>${E(d.nama)} <small>${rp(d.estimasiBiaya)}</small><button type="button" class="sm" data-a="mv" data-d="${i}" data-i="${j}" data-v="-1">↑</button><button type="button" class="sm" data-a="mv" data-d="${i}" data-i="${j}" data-v="1">↓</button><button type="button" class="sm" data-a="rm" data-d="${i}" data-i="${j}">✕</button></li>` : ''; }).join('') + `</ol>` : `<p class="mu">${E(t('noact'))}</p>`}<div class="row"><select id="s${i}">${D.dest.map((d) => `<option value="${d.id}">${E(d.nama)}</option>`).join('')}</select><button type="button" class="btn" data-a="addact" data-d="${i}">${E(t('add'))}</button></div></section>`;
+        }).join('');
+        return `<h1>${E(t('plan'))}</h1><div class="card pad row"><label>${E(t('pn'))}<input data-g="I" data-f="namaPerjalanan" value="${E(cur.namaPerjalanan)}"></label><label>${E(t('ps'))}<input type="date" data-g="I" data-f="tanggalMulai" value="${E(cur.tanggalMulai)}"></label><label>${E(t('pd'))}<select data-g="I" data-f="jumlahHari">${[1, 2, 3, 4, 5].map((n) => `<option value="${n}"${n === cur.jumlahHari ? ' selected' : ''}>${n}</option>`).join('')}</select></label><label>${E(t('pp'))}<input type="number" min="1" max="50" data-g="I" data-f="jumlahWisatawan" value="${cur.jumlahWisatawan}"></label></div>${daysHtml}<p><b>${E(t('tot'))}: <span id="tot">${rp(cur.totalAnggaran)}</span></b></p><div class="row"><button type="button" class="btn g" data-a="saveit">${E(t('save'))}</button><button type="button" class="btn o" data-a="newit">${E(t('newi'))}</button><a class="btn o" href="#/budget">${E(t('budget'))}</a></div><h2 style="margin-top:24px">${E(t('saved'))}</h2>${its.length ? `<div class="table-scroll"><table>` + its.map((x) => `<tr><td>${E(x.namaPerjalanan)}</td><td>${x.jumlahHari} ${E(t('day'))}, ${x.jumlahWisatawan} pax</td><td>${rp(x.totalAnggaran)}</td><td><button type="button" class="sm" data-a="loadit" data-id="${x.id}">${E(t('open'))}</button><button type="button" class="sm" data-a="del" data-t="its" data-id="${x.id}">${confirmKey === 'its:' + x.id ? E(t('sure')) : E(t('del'))}</button></td></tr>`).join('') + `</table></div>` : `<p class="mu">-</p>`}`;
+      };
+
+      const renderBudgetRes = () => {
+        const x = budget, p = Math.max(x.pax, 1);
+        const rows = [['r_tr', x.tr * x.pax], ['r_ho', x.ho * x.nights * x.rooms], ['r_ti', x.ti * x.pax], ['r_me', x.me * (x.nights + 1) * x.pax], ['r_ot', x.ot]];
+        const sum = rows.reduce((a, b) => a + b[1], 0);
+        return `<div class="table-scroll"><table>${rows.map((a) => `<tr><td>${E(t(a[0]))}</td><td>${rp(a[1])}</td></tr>`).join('')}<tr><th>${E(t('r_t'))}</th><th>${rp(sum)}</th></tr><tr><td>${E(t('r_pp'))}</td><td>${rp(Math.round(sum / p))}</td></tr></table></div>`;
+      };
+
+      Pg.budget = () => {
+        liveUpdater = renderBudgetRes;
+        const f = (k, l, min = 0) => `<label>${E(t(l))}<input type="number" min="${min}" data-g="B" data-f="${k}" value="${budget[k]}"></label>`;
+        return `<h1>${E(t('budget'))}</h1><div class="card pad row">${f('pax', 'pp', 1)}${f('nights', 'b_n')}${f('tr', 'b_tr')}${f('ho', 'b_ho')}${f('rooms', 'b_r', 1)}${f('ti', 'b_ti')}${f('me', 'b_me')}${f('ot', 'b_ot')}</div><button type="button" class="btn o" data-a="bit">${E(t('b_it'))}</button><div class="card pad" id="res">${renderBudgetRes()}</div><p class="note">${E(t('demo'))}</p>`;
+      };
+
+      const renderPkgRes = () => {
+        const n = pkgFilter.cats.length;
+        const list = D.paket.map((p) => {
+          const ds_ = parseList(p.daftarDestinasi).map((id) => getItem('dest', id)).filter(Boolean);
+          const cs = [...new Set(ds_.map((d) => d.kategori))], ws = [...new Set(ds_.map((d) => d.wilayah))], mt = cs.filter((c) => pkgFilter.cats.includes(c)), why = [];
+          let sc = n ? (60 * mt.length) / n : 60;
+          why.push(n ? `${t('i_t')}: ${mt.length}/${n} (${mt.map(cn).join(', ') || '-'})` : `${t('i_t')}: -`);
+          const bo = !pkgFilter.budget || p.estimasiBiaya <= pkgFilter.budget; if (bo) sc += 25; why.push(`${bo ? '✔' : '✘'} ${rp(p.estimasiBiaya)} / ${rp(pkgFilter.budget)}`);
+          const dok = !pkgFilter.days || p.durasi <= pkgFilter.days; if (dok) sc += 15; why.push(`${dok ? '✔' : '✘'} ${p.durasi} ${t('day')}`);
+          return { p, sc: Math.round(sc), why, ws };
+        }).filter((r) => !pkgFilter.wil || r.ws.includes(pkgFilter.wil)).sort((a, b) => b.sc - a.sc);
+        return list.length ? `<div class="g4">` + list.map((x) => `<article class="card"><div class="bd"><span class="badge">${E(t('m'))} ${x.sc}%</span><h3>${E(x.p.nama)}</h3><small>${E(x.p.deskripsi)}</small><small>${E(x.ws.map((w) => WILAYAH[w]).join(', '))}</small><small>${x.why.map(E).join('<br>')}</small><button type="button" class="btn o" data-a="usepkg" data-id="${x.p.id}">${E(t('use'))}</button></div></article>`).join('') + `</div>` : `<p class="note">${E(t('none'))}</p>`;
+      };
+
+      Pg.pkg = () => {
+        liveUpdater = renderPkgRes;
+        return `<h1>${E(t('pkg'))}</h1><div class="card pad"><b>${E(t('i_t'))}</b><div class="row" style="margin:8px 0 14px">${Object.keys(CATEGORIES).map((k) => `<label class="ck"><input type="checkbox" data-g="P" data-v="${k}"${pkgFilter.cats.includes(k) ? ' checked' : ''}> ${E(cn(k))}</label>`).join('')}</div><div class="row"><label>${E(t('i_b'))}<input type="number" min="0" data-g="P" data-f="budget" value="${pkgFilter.budget}"></label><label>${E(t('i_d'))}<input type="number" min="1" data-g="P" data-f="days" value="${pkgFilter.days}"></label><label>${E(t('allr'))}<select data-g="P" data-f="wil">${ro(pkgFilter.wil)}</select></label></div></div><div id="res">${renderPkgRes()}</div>`;
+      };
+
+      Pg.fav = () => {
+        const m = { dest: dc, kuliner: fc, akomodasi: ac };
+        const it = fav.map((f) => ({ f, x: getItem(f.tipeItem, f.itemId) })).filter((o) => o.x && m[o.f.tipeItem]);
+        return `<h1>${E(t('fav'))}</h1>` + (it.length ? `<div class="g4">${it.map((o) => m[o.f.tipeItem](o.x)).join('')}</div>` : `<p class="note">${E(t('fav0'))}</p>`);
+      };
+
+      Pg.admin = () => {
+        const s = ADMIN_SCHEMAS[admin.tab], e = admin.ed;
+        return `<h1>${E(t('admin'))}</h1><div class="tabs">${Object.keys(ADMIN_SCHEMAS).map((k) => `<button type="button" class="btn${k === admin.tab ? '' : ' o'}" data-a="tab" data-t="${k}">${E(t(ADMIN_SCHEMAS[k].labelKey))}</button>`).join('')}<button type="button" class="btn g" data-a="del" data-t="reset" data-id="x">${confirmKey === 'reset:x' ? E(t('sure')) : E(t('reset'))}</button></div><div class="table-scroll"><table>` + D[admin.tab].map((r) => `<tr><td>${E(r.nama)}</td><td>${E(WILAYAH[r.wilayah] || `${r.durasi} ${t('day')}`)}</td><td><button type="button" class="sm" data-a="edit" data-id="${r.id}">${E(t('edit'))}</button><button type="button" class="sm" data-a="del" data-t="${admin.tab}" data-id="${r.id}">${confirmKey === `${admin.tab}:${r.id}` ? E(t('sure')) : E(t('del'))}</button></td></tr>`).join('') + `</table></div><h2 style="margin-top:22px">${e && e.id ? E(t('edit')) : E(t('new'))}</h2>${admin.err ? `<p class="note" role="alert">⚠ ${E(admin.err)}</p>` : ''}<form id="fm" class="card pad row" style="align-items:stretch">` + s.fields.map(([n, ty, r, o]) => { const v = e ? e[n] : '', lb = n + (r ? ' *' : ''); return ty === 'a' ? `<label>${E(lb)}<textarea name="${n}">${E(v)}</textarea></label>` : ty === 'c' ? `<label class="ck"><input type="checkbox" name="${n}"${v ? ' checked' : ''}> ${E(n)}</label>` : ty === 's' ? `<label>${E(lb)}<select name="${n}">${o.map((x) => `<option value="${E(x)}"${v === x ? ' selected' : ''}>${E(x)}</option>`).join('')}</select></label>` : `<label>${E(lb)}<input name="${n}" type="${ty === 'n' ? 'number" min="0' : 'text'}" value="${E(ty === 'l' ? parseList(v).join(', ') : v)}"></label>`; }).join('') + `<label>${E(t('photoLabel'))}<input type="text" name="imageUrl" id="iu" value="${E(e && e.imageUrl && e.imageUrl !== 'placeholder' ? e.imageUrl : '')}"><input type="file" accept="image/*" data-up="1"><small id="upn"></small></label><div class="row"><button class="btn" type="submit">${E(t('save'))}</button><button class="btn o" type="button" data-a="cancel">${E(t('cancel'))}</button></div></form>`;
+      };
+
+      const render = () => {
+        const parts = location.hash.replace(/^#\/?/, '').split('/');
+        const page = PAGES.includes(parts[0]) ? parts[0] : 'home';
+        const root = document.documentElement;
+        if (theme === 'dark' || theme === 'light') root.dataset.theme = theme; else delete root.dataset.theme;
+        root.lang = lang;
+
+        const isDark = theme === 'dark' || (theme === 'auto' && window.matchMedia?.('(prefers-color-scheme: dark)').matches);
+        liveUpdater = null;
+
+        $('#site-header').innerHTML = `<div class="wrap header-inner"><a class="brand" href="#/">☪ Serambi Journey</a><nav class="nav-menu ${menuOpen ? 'open' : ''}" id="main-nav" aria-label="Menu">${PAGES.map((k) => `<a href="#/${k}" class="${k === page ? 'on' : ''}" data-nav="1">${E(t(k))}${k === 'fav' && fav.length ? ` (${fav.length})` : ''}</a>`).join('')}</nav><div class="header-actions"><button type="button" class="icon-btn" data-a="theme" aria-label="${E(t('theme'))}">${isDark ? '☀️' : '🌙'}</button><button type="button" class="lg" data-a="lang">${lang === 'id' ? 'EN' : 'ID'}</button><button type="button" class="icon-btn menu-toggle" data-a="menu" aria-expanded="${menuOpen}">${menuOpen ? '✕' : '☰'}</button></div></div>`;
+        $('#demo-banner').textContent = '⚠ ' + t('demo');
+        $('#app').innerHTML = Pg[page](parts[1]);
+        $('#site-footer').textContent = t('ft');
+      };
+
+      addEventListener('hashchange', () => { if (!keepFilters) filters = defFlt(); keepFilters = false; menuOpen = false; confirmKey = ''; render(); scrollTo(0, 0); });
+
+      document.addEventListener('input', (e) => {
+        const el = e.target, g = el.dataset.g, f = el.dataset.f;
+        if (!g) return;
+        if (g === 'I') {
+          let v = el.value;
+          if (f === 'jumlahHari') { v = Math.max(1, Math.min(5, +v || 1)); while (cur.daftarAktivitas.length < v) cur.daftarAktivitas.push([]); cur.daftarAktivitas.length = v; }
+          else if (f === 'jumlahWisatawan') v = Math.max(1, +v || 1);
+          cur[f] = v; cur.totalAnggaran = calcIt(cur); persist('cur', cur);
+          if (f === 'jumlahHari' || f === 'tanggalMulai') render(); else if ($('#tot')) $('#tot').textContent = rp(cur.totalAnggaran);
+          return;
+        }
+        const obj = { S: filters, B: budget, P: pkgFilter }[g];
+        if (!obj) return;
+        if (el.type === 'checkbox') obj.cats = el.checked ? [...obj.cats, el.dataset.v] : obj.cats.filter((x) => x !== el.dataset.v);
+        else obj[f] = el.type === 'number' ? Math.max(0, +el.value || 0) : el.value;
+        if (liveUpdater && $('#res')) $('#res').innerHTML = liveUpdater();
+      });
+
+      document.addEventListener('change', (e) => {
+        const el = e.target; if (!el.dataset.up || !el.files?.[0]) return;
+        const r = new FileReader();
+        r.onload = () => {
+          const g = new Image();
+          g.onload = () => {
+            const k = Math.min(1, 640 / Math.max(g.width, g.height)), c = document.createElement('canvas');
+            c.width = Math.round(g.width * k); c.height = Math.round(g.height * k);
+            c.getContext('2d').drawImage(g, 0, 0, c.width, c.height);
+            $('#iu').value = c.toDataURL('image/jpeg', 0.72);
+            $('#upn').textContent = t('photoReady');
+          };
+          g.src = r.result;
+        };
+        r.readAsDataURL(el.files[0]);
+      });
+
+      document.addEventListener('submit', (e) => {
+        if (e.target.id !== 'fm') return;
+        e.preventDefault();
+        const s = ADMIN_SCHEMAS[admin.tab], fd = new FormData(e.target), o = {}, er = [];
+        s.fields.forEach(([n, ty, r]) => {
+          let v = fd.get(n);
+          if (ty === 'c') v = fd.has(n);
+          else if (ty === 'n') { v = v === '' ? '' : +v; if (r && !(v >= 0)) er.push(n); }
+          else { v = String(v || '').trim(); if (r && !v) er.push(n); if (ty === 'l') v = parseList(v); }
+          o[n] = v;
+        });
+        if (admin.tab === 'paket' && !er.length && o.daftarDestinasi.some((x) => !getItem('dest', x))) er.push('daftarDestinasi (id: d1, d2, ...)');
+        const imgUrl = String(fd.get('imageUrl') || '').trim();
+        if (er.length) { admin.err = er.join(', ') + ': ' + t('req'); admin.ed = { ...admin.ed, ...o, imageUrl: imgUrl || 'placeholder' }; render(); return; }
+        const ex = admin.ed?.id && getItem(admin.tab, admin.ed.id);
+        const x = ex || { id: s.prefix + Date.now().toString(36), imageUrl: 'placeholder' };
+        Object.assign(x, o); x.imageUrl = imgUrl || 'placeholder';
+        if (admin.tab === 'dest') { x.alamat = x.alamat || `${WILAYAH[x.wilayah]}, Aceh`; x.mapsUrl = buildMapsUrl(x); }
+        if (!ex) D[admin.tab].push(x);
+        persist('data', D); admin.ed = null; admin.err = ''; toast('✔ ' + t('save')); render();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const el = e.target.closest('[data-a="go"], [data-a="reg"]');
+        if (el) { e.preventDefault(); el.click(); }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-nav]')) menuOpen = false;
+        const el = e.target.closest('[data-a]'); if (!el) return;
+        const a = el.dataset.a, id = el.dataset.id, d = +el.dataset.d, i = +el.dataset.i;
+        if (a === 'menu') { menuOpen = !menuOpen; render(); }
+        else if (a === 'theme') { const dk = theme === 'dark' || (theme === 'auto' && window.matchMedia?.('(prefers-color-scheme: dark)').matches); theme = dk ? 'light' : 'dark'; persist('theme', theme); render(); }
+        else if (a === 'lang') { lang = lang === 'id' ? 'en' : 'id'; persist('lang', lang); render(); }
+        else if (a === 'fav') { const k = fav.findIndex((f) => f.tipeItem === el.dataset.t && f.itemId === id); if (k >= 0) fav.splice(k, 1); else fav.push({ id: 'f' + Date.now(), itemId: id, tipeItem: el.dataset.t }); persist('fav', fav); render(); }
+        else if (a === 'go') location.hash = '#/dest/' + id;
+        else if (a === 'cat') { filters = defFlt(); filters.kat = id; if (location.hash === '#/dest') render(); else { keepFilters = true; location.hash = '#/dest'; } }
+        else if (a === 'reg') { filters = defFlt(); filters.wil = id; if (location.hash === '#/dest') render(); else { keepFilters = true; location.hash = '#/dest'; } }
+        else if (a === 'addact') { cur.daftarAktivitas[d].push($('#s' + d).value); persist('cur', cur); render(); }
+        else if (a === 'addday') { const td = +($('#detail-day-select')?.value || 0); cur.daftarAktivitas[td].push(id); persist('cur', cur); toast(`✔ ${t('day')} ${td + 1}`); }
+        else if (a === 'rm') { cur.daftarAktivitas[d].splice(i, 1); persist('cur', cur); render(); }
+        else if (a === 'mv') { const l = cur.daftarAktivitas[d], j = i + (+el.dataset.v); if (j >= 0 && j < l.length) { [l[i], l[j]] = [l[j], l[i]]; persist('cur', cur); render(); } }
+        else if (a === 'saveit') { cur.totalAnggaran = calcIt(cur); const c = JSON.parse(JSON.stringify(cur)), k = its.findIndex((x) => x.id === cur.id); if (k >= 0) its[k] = c; else its.push(c); persist('its', its); persist('cur', cur); toast('✔ ' + t('save')); render(); }
+        else if (a === 'newit') { cur = newIt(); persist('cur', cur); render(); }
+        else if (a === 'loadit') { cur = JSON.parse(JSON.stringify(its.find((x) => x.id === id))); persist('cur', cur); render(); scrollTo(0, 0); }
+        else if (a === 'bit') { const px = Math.max(1, cur.jumlahWisatawan); budget.ti = Math.round(calcIt(cur) / px); budget.pax = px; budget.nights = Math.max(cur.jumlahHari - 1, 0); render(); }
+        else if (a === 'usepkg') { const p = getItem('paket', id); cur = newIt(); cur.namaPerjalanan = p.nama; cur.jumlahHari = Math.min(5, p.durasi); cur.daftarAktivitas = Array.from({ length: cur.jumlahHari }, () => []); parseList(p.daftarDestinasi).forEach((x, k) => cur.daftarAktivitas[k % cur.jumlahHari].push(x)); persist('cur', cur); location.hash = '#/plan'; }
+        else if (a === 'tab') { admin = { tab: el.dataset.t, ed: null, err: '' }; confirmKey = ''; render(); }
+        else if (a === 'edit') { admin.ed = getItem(admin.tab, id); admin.err = ''; render(); $('#fm')?.scrollIntoView({ behavior: 'smooth' }); }
+        else if (a === 'cancel') { admin.ed = null; admin.err = ''; render(); }
+        else if (a === 'del') {
+          const ty = el.dataset.t, k = ty + ':' + id;
+          if (confirmKey !== k) { confirmKey = k; render(); return; }
+          confirmKey = '';
+          if (ty === 'reset') { D = createSeedData(); persist('data', D); toast('✔ reset'); }
+          else if (ty === 'its') { its = its.filter((x) => x.id !== id); persist('its', its); }
+          else {
+            D[ty] = D[ty].filter((x) => x.id !== id); persist('data', D);
+            fav = fav.filter((f) => !(f.tipeItem === ty && f.itemId === id)); persist('fav', fav);
+            if (ty === 'dest') { cur.daftarAktivitas = cur.daftarAktivitas.map((l) => l.filter((x) => x !== id)); persist('cur', cur); }
+          }
+          render();
+        }
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
